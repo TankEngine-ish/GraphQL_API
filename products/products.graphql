@@ -1,0 +1,11 @@
+type Product {
+  id: ID!
+  description: String!
+  reviews: [Review]
+  price: Float! 
+}
+
+type Review {
+    rating: Int!
+    comment: String
+}

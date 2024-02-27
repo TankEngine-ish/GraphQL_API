@@ -1,49 +1,38 @@
+const path = require('path');
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 
 const { loadFilesSync } = require('@graphql-tools/load-files');
 
-const { makeExecutableSchema } = require('graphql-tools');
+const { makeExecutableSchema } = require('@graphql-tools/schema');
 
 
-const typesArray = loadFilesSync('**/*.graphql');
-
+const typesArray = loadFilesSync('**/*', {
+    extensions: ['graphql'],
+});
 
 const schema = makeExecutableSchema({
-    typeDefs: [schemaText]
+    typeDefs: typesArray,
+    resolvers: {
+        Query: {
+            products: async (parent) => { 
+                console.log('Getting the products...');
+                const product = await Promise.resolve(parent.products);
+                return product;
+            },
+            orders: (parent) => {
+                console.log('Getting the orders...')
+                return parent.orders;
+            },
+
+        }
+    },
 });
 
 const root = {
-    products: [
-    {
-        id: 'leatherbelt',
-        description: 'Leather Belt',
-        price: 25.00,
-    },
-    {
-        id: 'cottonsocks',
-        description: 'Cotton Socks',
-        price: 5.00,
-    },
-    ],
-    orders: [
-    {
-        date: '2021-01-01',
-        subtotal: 30.00,
-        items: [
-        {
-            product: {
-                id: 'leatherbelt',
-                description: 'Vintage Leather Belt',
-                price: 34.15,
-            },
-            quantity: 1,
-            },  
-            ]
-        }
-    ]
+    products: require ('./products/products.model'),
+    orders: require ('./orders/orders.model'),
 };
- 
 
 const app = express();
 

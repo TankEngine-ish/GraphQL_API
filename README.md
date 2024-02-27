@@ -42,3 +42,14 @@ The resolvers are defined in the *.resolvers.js files. They provide the logic fo
 ## Data
 
 The data for products and orders is stored in memory in the products.model.js and orders.model.js files respectively. The data includes a list of products and a list of orders, each with their respective properties as defined in the schema. The models also include functions for fetching and mutating the data.
+
+## Notes
+
+Before adding Apollo Server package I tested the queries inside graphiQL
+
+![alt text](<assets/Screenshot from 2024-02-27 17-42-35.png>)
+
+
+Once you get Apollo you can test your queries, mutations and much more inside this cool front-end itnerface.
+
+![alt text](<assets/Screenshot from 2024-02-27 21-32-53.png>)
